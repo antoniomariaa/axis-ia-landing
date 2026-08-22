@@ -52,6 +52,40 @@
   .vp-typing { display: flex; gap: 4px; padding: 4px 14px; align-self: flex-start; }
   .vp-typing span { width: 6px; height: 6px; border-radius: 50%; background: var(--ink-soft); opacity: 0.5; }
   .vp-note { font-size: 11.5px; color: var(--ink-soft); text-align: center; padding: 0 20px 18px; }
+
+  /* ---------- LOS 4 DOLORES DEL AGENTE INDEPENDIENTE (propio de esta landing) ---------- */
+  .pain-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+  .pain-item {
+    padding: 32px;
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .pain-item:nth-child(2n) { border-right: none; }
+  .pain-item:nth-child(3), .pain-item:nth-child(4) { border-bottom: none; }
+  .pain-num {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--teal-light);
+    background: var(--surface-2);
+    border: 1px solid var(--border-strong);
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  .pain-item h3 { font-size: 17px; margin-bottom: 10px; }
+  .pain-item p { font-size: 13.8px; color: var(--ink-soft); }
 </style>
 </head>
 <body>
@@ -113,6 +147,37 @@
       </div>
     </div>
   </header>
+
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <span class="section-tag">Esto te suena</span>
+        <h2>Los 4 dolores del agente independiente</h2>
+      </div>
+      <div class="pain-list">
+        <div class="pain-item">
+          <div class="pain-num">01</div>
+          <h3>El primero que contesta, se queda con el lead</h3>
+          <p>Un comprador escribe a tres agentes al mismo tiempo. Si tardas 20 minutos porque estabas mostrando otra propiedad, ya perdiste — y ni te enteraste.</p>
+        </div>
+        <div class="pain-item">
+          <div class="pain-num">02</div>
+          <h3>Repites lo mismo cien veces</h3>
+          <p>"¿Cuántos metros tiene?" "¿Tiene puesto de estacionamiento?" "¿Acepta financiamiento?" Las mismas cinco preguntas, con cada propiedad, con cada lead. Horas que no facturas.</p>
+        </div>
+        <div class="pain-item">
+          <div class="pain-num">03</div>
+          <h3>Tu horario no es 24/7, pero tu WhatsApp sí recibe mensajes 24/7</h3>
+          <p>El lead que escribe un domingo a las 9pm no espera hasta el lunes. Si no le respondes ya, busca otra opción — o otro agente.</p>
+        </div>
+        <div class="pain-item">
+          <div class="pain-num">04</div>
+          <h3>No sabes cuál lead vale la pena perseguir</h3>
+          <p>Entre curiosos, gente que "solo está mirando" y compradores reales con presupuesto listo, pierdes tiempo con los primeros y a veces dejas fríos a los segundos.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
 </body>
 </html>
