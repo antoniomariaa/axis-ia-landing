@@ -27,33 +27,41 @@ Vercel (hosting estático).
 
 ## Architecture
 
-**Dos landings independientes, cada una un solo archivo:**
+**Dos landings, un CSS compartido:**
 
 - `index.html` (raíz) — landing 1, auditoría gratuita general. **Nunca la edites** salvo que te lo
   pidan explícitamente por su nombre.
 - `inmobiliarias/index.html` — landing 2, vende el agente de WhatsApp específicamente a dueños de
   agencias inmobiliarias. Assets reales pendientes (video, capturas) en `inmobiliarias/assets/` —
   ver el README ahí dentro.
+- `assets/shared.css` — tokens, reset, nav, botones, shell de sección, `.hero`/`.stage`/`.tilt`,
+  `.glance-*`, `.report-card`/`.rc-*` y footer. **Todo lo que ya era idéntico byte a byte entre las
+  dos landings vive acá.** Enlazado como `assets/shared.css` desde `index.html` y
+  `../assets/shared.css` desde `inmobiliarias/index.html`.
 
 **No hay cross-linking entre ambas landings** — ni una enlaza a la otra. Cada canal de tráfico
 lleva a una sola oferta.
 
-**Cada landing es 100% autocontenida:** `<style>` inline en el `<head>`, SVGs inline en el `<body>`,
-sin JS. No existe ningún CSS ni JS compartido entre landings, y no se crea uno — cada archivo repite
-las variables de diseño que necesita.
+**CSS/JS propio de cada landing sigue inline** en su `<style>` — solo lo que ya era 100% idéntico
+entre ambas se extrajo a `assets/shared.css` (ver arriba). Nunca crees un tercer archivo CSS ni
+dupliques un bloque que ya vive en `shared.css` de vuelta a un `<style>` inline. Sin JS en ningún
+lado — ni compartido ni por landing.
 
-**Sistema de diseño — una sola fuente de verdad, `index.html` raíz:**
+**Sistema de diseño — una sola fuente de verdad, `assets/shared.css`:**
 
 | Concern | Single source of truth |
 |---|---|
-| Tokens de color, tipografía, breakpoints | El bloque `:root` de `index.html` (raíz) — cada landing nueva copia estos valores verbatim, nunca los aproxima |
-| Componente de tarjeta (`.report-card`/`.rc-*`) | Definido en `index.html`; se reutiliza para cualquier mockup de UI nuevo antes de inventar un componente distinto |
+| Tokens de color, tipografía, breakpoints | El bloque `:root` de `assets/shared.css` |
+| Hero compartido (`.hero`/`.hero-text`/`.stage`/`.tilt`) | Bloque de texto a la izquierda + mockup con perspectiva y resplandor abajo — mismo patrón en ambas landings, contenido propio de cada una |
+| Lista "de un vistazo" (`.glance-list`/`.glance-row`) | Índices A/B/C/D — reemplaza cualquier grid de tarjetas de beneficios/problemas nueva |
+| Componente de tarjeta (`.report-card`/`.rc-*`) | Se reutiliza para cualquier mockup de UI nuevo antes de inventar un componente distinto |
 | Convención de rutas de assets | Todo `src`/`poster` dentro de un archivo de landing es relativo a **ese mismo archivo** (`assets/demo.mp4`), nunca con el prefijo de la carpeta de la landing |
 
 ## Code rules
 
-1. **Un archivo por landing. Todo inline.** Nunca extraigas CSS o JS a un archivo separado, ni
-   "solo para esta sección".
+1. **CSS realmente compartido vive en `assets/shared.css`; lo propio de una landing va inline en
+   su `<style>`.** No dupliques un bloque de `shared.css` de vuelta a un archivo, y no muevas a
+   `shared.css` algo que solo usa una landing "por si acaso". Sin JS en ningún lado.
 2. **Nunca edites `index.html` (raíz)** a menos que la tarea lo pida explícitamente por nombre —
    incluye no agregar links hacia otras landings.
 3. **Copia los tokens de diseño, no los reinventes.** Si necesitas un color, tipografía o espaciado
@@ -107,7 +115,8 @@ Convenciones diferidas — lee el archivo correspondiente antes de editar esa á
 
 1. **`index.html` (raíz) nunca se modifica** a menos que una tarea lo pida explícitamente por su
    nombre exacto.
-2. **Nunca se crea un CSS o JS compartido entre landings** — cada archivo es autocontenido.
+2. **`assets/shared.css` es el único archivo CSS compartido permitido** — nunca se crea un segundo,
+   y nunca se le mueve algo que solo una landing usa.
 3. **Nunca se introduce un gestor de paquetes, framework o build step** sin que se pida
    explícitamente y se documente el cambio de convención.
 4. **Nunca se inventan métricas, cifras o resultados atribuidos a un cliente real.**
