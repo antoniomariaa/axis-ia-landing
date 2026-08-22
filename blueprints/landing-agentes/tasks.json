@@ -1,0 +1,137 @@
+[
+  {
+    "id": "E1-T1",
+    "title": "Estructura, shell de página, nav y hero con mockup de chat",
+    "epic": "01-landing-agentes",
+    "dependencies": [],
+    "priority": "p0",
+    "acceptance": [
+      "WHEN se abre `agentes/index.html` THE SYSTEM SHALL mostrar la nav con `class=\"brand-name\"` conteniendo \"Axis IA\" y un `class=\"nav-cta\"` con el texto \"Pruébalo gratis\".",
+      "WHEN se ejecuta `test \"$(grep -c \"584121484033\" agentes/index.html)\" = \"2\"` THE SYSTEM SHALL salir con código 0 (nav + CTA primario del hero — el CTA final aún no existe).",
+      "WHEN se ejecuta `grep -q \"para mis leads\" agentes/index.html` THE SYSTEM SHALL salir con código 0 — el mensaje de WhatsApp correcto de esta landing está presente.",
+      "WHEN se ejecuta `grep -q \"Mientras enseñas un apartamento\" agentes/index.html` THE SYSTEM SHALL salir con código 0 — el H1 literal está presente.",
+      "WHEN se ejecuta `grep -q \"Ver cómo funciona\" agentes/index.html` THE SYSTEM SHALL salir con código 0 — el CTA secundario de texto está presente.",
+      "WHEN se ejecuta `grep -q \"vp-badge\" agentes/index.html` y `grep -q \"Recomendada\" agentes/index.html` THE SYSTEM SHALL salir ambos con código 0 — el badge del mockup existe."
+    ],
+    "verify": [
+      "grep -q 'class=\"brand-name\"' agentes/index.html",
+      "grep -q 'class=\"nav-cta\"' agentes/index.html",
+      "test \"$(grep -c \"584121484033\" agentes/index.html)\" = \"2\"",
+      "grep -q \"para mis leads\" agentes/index.html",
+      "grep -q \"Mientras enseñas un apartamento\" agentes/index.html",
+      "grep -q \"Ver cómo funciona\" agentes/index.html",
+      "grep -q \"vp-badge\" agentes/index.html",
+      "grep -q \"Recomendada\" agentes/index.html"
+    ],
+    "checkpoint": "agentes-01-shell-nav-hero",
+    "files": ["agentes/index.html"],
+    "status": "done"
+  },
+  {
+    "id": "E1-T2",
+    "title": "Sección Los 4 dolores del agente independiente",
+    "epic": "01-landing-agentes",
+    "dependencies": ["E1-T1"],
+    "priority": "p0",
+    "acceptance": [
+      "WHEN se ejecuta `test \"$(grep -c 'class=\"pain-item\"' agentes/index.html)\" = \"4\"` THE SYSTEM SHALL salir con código 0.",
+      "WHEN se ejecuta `grep -q \"Esto te suena\" agentes/index.html` THE SYSTEM SHALL salir con código 0.",
+      "WHEN se ejecuta `grep -q \"El primero que contesta, se queda con el lead\" agentes/index.html` THE SYSTEM SHALL salir con código 0.",
+      "WHEN se ejecuta `grep -q \"Repites lo mismo cien veces\" agentes/index.html` THE SYSTEM SHALL salir con código 0.",
+      "WHEN se ejecuta `grep -q \"tu WhatsApp sí recibe mensajes 24/7\" agentes/index.html` THE SYSTEM SHALL salir con código 0.",
+      "WHEN se ejecuta `grep -q \"No sabes cuál lead vale la pena perseguir\" agentes/index.html` THE SYSTEM SHALL salir con código 0."
+    ],
+    "verify": [
+      "test \"$(grep -c 'class=\"pain-item\"' agentes/index.html)\" = \"4\"",
+      "grep -q \"Esto te suena\" agentes/index.html",
+      "grep -q \"El primero que contesta, se queda con el lead\" agentes/index.html",
+      "grep -q \"Repites lo mismo cien veces\" agentes/index.html",
+      "grep -q \"tu WhatsApp sí recibe mensajes 24/7\" agentes/index.html",
+      "grep -q \"No sabes cuál lead vale la pena perseguir\" agentes/index.html"
+    ],
+    "checkpoint": "agentes-02-dolores",
+    "files": ["agentes/index.html"],
+    "status": "pending"
+  },
+  {
+    "id": "E1-T3",
+    "title": "Sección de un vistazo (glance) y por qué es distinto",
+    "epic": "01-landing-agentes",
+    "dependencies": ["E1-T2"],
+    "priority": "p0",
+    "acceptance": [
+      "WHEN se ejecuta `test \"$(grep -c 'class=\"glance-row\"' agentes/index.html)\" = \"4\"` THE SYSTEM SHALL salir con código 0.",
+      "WHEN se ejecuta `grep -q \"Axis IA, de un vistazo\" agentes/index.html` THE SYSTEM SHALL salir con código 0.",
+      "WHEN se ejecuta `grep -q \"Precalifica antes de que tú intervengas\" agentes/index.html` THE SYSTEM SHALL salir con código 0.",
+      "WHEN se ejecuta `grep -q \"Te avisa cuándo meterte tú\" agentes/index.html` THE SYSTEM SHALL salir con código 0.",
+      "WHEN se ejecuta `grep -q \"distinto a\" agentes/index.html` THE SYSTEM SHALL salir con código 0 — el título de la sección \"por qué es distinto\" está presente.",
+      "WHEN se ejecuta `grep -q \"no recepcionista\" agentes/index.html` THE SYSTEM SHALL salir con código 0 — el segundo párrafo de esa sección está presente."
+    ],
+    "verify": [
+      "test \"$(grep -c 'class=\"glance-row\"' agentes/index.html)\" = \"4\"",
+      "grep -q \"Axis IA, de un vistazo\" agentes/index.html",
+      "grep -q \"Precalifica antes de que tú intervengas\" agentes/index.html",
+      "grep -q \"Te avisa cuándo meterte tú\" agentes/index.html",
+      "grep -q \"distinto a\" agentes/index.html",
+      "grep -q \"no recepcionista\" agentes/index.html"
+    ],
+    "checkpoint": "agentes-03-glance-distinto",
+    "files": ["agentes/index.html"],
+    "status": "pending"
+  },
+  {
+    "id": "E1-T4",
+    "title": "CTA final, footer y responsive",
+    "epic": "01-landing-agentes",
+    "dependencies": ["E1-T3"],
+    "priority": "p0",
+    "acceptance": [
+      "WHEN se ejecuta `test \"$(grep -c \"584121484033\" agentes/index.html)\" = \"3\"` THE SYSTEM SHALL salir con código 0 (nav + hero + CTA final — completo).",
+      "WHEN se ejecuta `grep -q \"Cuántos leads se te fueron esta semana\" agentes/index.html` THE SYSTEM SHALL salir con código 0.",
+      "WHEN se ejecuta `grep -q \"+58 412 1484033\" agentes/index.html` THE SYSTEM SHALL salir con código 0 — el número visible como texto plano está presente.",
+      "WHEN se ejecuta `! (awk '/<footer>/,/<\\/footer>/' agentes/index.html | grep -q \"<a \")` THE SYSTEM SHALL salir con código 0 — cero enlaces dentro del footer.",
+      "WHEN se ejecuta `grep -q \"Automatización con IA para agentes y agencias inmobiliarias\" agentes/index.html` THE SYSTEM SHALL salir con código 0.",
+      "WHEN se ejecuta `grep -q \"@media (max-width: 860px)\" agentes/index.html && grep -q \"@media (max-width: 520px)\" agentes/index.html && grep -q \"</html>\" agentes/index.html` THE SYSTEM SHALL salir con código 0 — breakpoints presentes y el archivo quedó correctamente cerrado."
+    ],
+    "verify": [
+      "test \"$(grep -c \"584121484033\" agentes/index.html)\" = \"3\"",
+      "grep -q \"Cuántos leads se te fueron esta semana\" agentes/index.html",
+      "grep -q \"+58 412 1484033\" agentes/index.html",
+      "! (awk '/<footer>/,/<\\/footer>/' agentes/index.html | grep -q \"<a \")",
+      "grep -q \"Automatización con IA para agentes y agencias inmobiliarias\" agentes/index.html",
+      "grep -q \"@media (max-width: 860px)\" agentes/index.html",
+      "grep -q \"@media (max-width: 520px)\" agentes/index.html",
+      "grep -q \"</html>\" agentes/index.html"
+    ],
+    "checkpoint": "agentes-04-cta-footer-responsive",
+    "files": ["agentes/index.html"],
+    "status": "pending"
+  },
+  {
+    "id": "E1-T5",
+    "title": "Verificación final: ruta resuelve, landings 1 y 2 intactas, tuteo correcto",
+    "epic": "01-landing-agentes",
+    "dependencies": ["E1-T4"],
+    "priority": "p0",
+    "acceptance": [
+      "WHEN se sirve el repositorio con `npx --yes http-server . -p 8080` y se pide `http://localhost:8080/agentes/` THE SYSTEM SHALL responder con código HTTP `200`.",
+      "WHEN se pide `http://localhost:8080/agentes/index.html` directamente THE SYSTEM SHALL responder también con código HTTP `200`.",
+      "WHEN se ejecuta `git diff --stat -- index.html` THE SYSTEM SHALL no producir ninguna salida — landing 1 permanece intacta.",
+      "WHEN se ejecuta `git diff --stat -- inmobiliarias/index.html` THE SYSTEM SHALL no producir ninguna salida — landing 2 permanece intacta.",
+      "WHEN se busca cualquiera de las formas de voseo tenés, querés, podés, sabés, escribís, sos en `agentes/index.html` THE SYSTEM SHALL no encontrar ninguna coincidencia.",
+      "WHEN se ejecuta `test \"$(grep -c \"584121484033\" agentes/index.html)\" = \"3\"` y `grep -q \"para mis leads\" agentes/index.html` y `! grep -q \"para mi inmobiliaria\" agentes/index.html` THE SYSTEM SHALL salir los tres con código 0 — el mensaje de WhatsApp es el correcto de esta landing, no el de inmobiliarias/index.html."
+    ],
+    "verify": [
+      "kill_port_8080() {\n  if command -v fuser >/dev/null 2>&1; then\n    fuser -k 8080/tcp 2>/dev/null || true\n  else\n    for pid in $(netstat -ano 2>/dev/null | grep LISTENING | grep \":8080 \" | awk '{print $NF}'); do\n      taskkill //F //PID \"$pid\" //T 2>/dev/null || true\n    done\n  fi\n}\nkill_port_8080\nnpx --yes http-server . -p 8080 >/dev/null 2>&1 &\nsleep 3\nCODE_DIR=$(curl -s -o /dev/null -w '%{http_code}' http://localhost:8080/agentes/)\nCODE_FILE=$(curl -s -o /dev/null -w '%{http_code}' http://localhost:8080/agentes/index.html)\nkill_port_8080\ntest \"$CODE_DIR\" = \"200\" && test \"$CODE_FILE\" = \"200\"",
+      "test -z \"$(git diff --stat -- index.html)\"",
+      "test -z \"$(git diff --stat -- inmobiliarias/index.html)\"",
+      "! grep -Eiq \"\\b(tenés|querés|podés|sabés|escribís|sos)\\b\" agentes/index.html",
+      "test \"$(grep -c \"584121484033\" agentes/index.html)\" = \"3\"",
+      "grep -q \"para mis leads\" agentes/index.html",
+      "! grep -q \"para mi inmobiliaria\" agentes/index.html"
+    ],
+    "checkpoint": "agentes-05-verify-deploy-ready",
+    "files": [],
+    "status": "pending"
+  }
+]
