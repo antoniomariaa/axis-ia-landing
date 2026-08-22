@@ -77,7 +77,7 @@
     ],
     "checkpoint": "agentes-03-glance-distinto",
     "files": ["agentes/index.html"],
-    "status": "pending"
+    "status": "done"
   },
   {
     "id": "E1-T4",
