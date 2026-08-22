@@ -1,0 +1,116 @@
+[
+  {
+    "id": "E1-T1",
+    "title": "Estructura, shell de página, nav y hero con video/placeholder",
+    "epic": "01-landing-inmobiliarias",
+    "dependencies": [],
+    "priority": "p0",
+    "acceptance": [
+      "WHEN se abre `inmobiliarias/index.html` en un navegador THE SYSTEM SHALL mostrar la barra de navegación con el logo \"Axis IA\" y un botón \"Hablar por WhatsApp\" que enlaza a `https://wa.me/584121484033?text=Hola%2C%20quiero%20ver%20el%20agente%20de%20WhatsApp%20para%20mi%20inmobiliaria`.",
+      "WHEN se ejecuta `test \"$(grep -c \"584121484033\" inmobiliarias/index.html)\" = \"2\"` THE SYSTEM SHALL salir con código 0 (nav + CTA del hero — el CTA final todavía no existe).",
+      "WHEN se ejecuta `grep -q 'src=\"assets/demo.mp4\"' inmobiliarias/index.html` THE SYSTEM SHALL salir con código 0.",
+      "WHEN se ejecuta `grep -q 'class=\"video-placeholder\"' inmobiliarias/index.html` THE SYSTEM SHALL salir con código 0, confirmando que el mockup CSS de reemplazo del video está presente.",
+      "WHEN se ejecuta `test -f inmobiliarias/assets/README.md` THE SYSTEM SHALL salir con código 0."
+    ],
+    "verify": [
+      "grep -q 'class=\"brand-name\"' inmobiliarias/index.html",
+      "test \"$(grep -c \"584121484033\" inmobiliarias/index.html)\" = \"2\"",
+      "grep -q 'src=\"assets/demo.mp4\"' inmobiliarias/index.html",
+      "grep -q 'poster=\"assets/poster.jpg\"' inmobiliarias/index.html",
+      "grep -q 'class=\"video-placeholder\"' inmobiliarias/index.html",
+      "test -f inmobiliarias/assets/README.md"
+    ],
+    "checkpoint": "step-01-shell-nav-hero",
+    "files": ["inmobiliarias/index.html", "inmobiliarias/assets/README.md"],
+    "status": "done"
+  },
+  {
+    "id": "E1-T2",
+    "title": "Sección Los dolores de una agencia",
+    "epic": "01-landing-inmobiliarias",
+    "dependencies": ["E1-T1"],
+    "priority": "p0",
+    "acceptance": [
+      "WHEN se ejecuta `test \"$(grep -c 'class=\"pain-item\"' inmobiliarias/index.html)\" = \"4\"` THE SYSTEM SHALL salir con código 0.",
+      "WHEN se ejecuta `grep -q 'Los dolores de una agencia con varios agentes' inmobiliarias/index.html` THE SYSTEM SHALL salir con código 0.",
+      "WHEN se ejecuta `grep -q 'Sin forma clara de repartir leads entre agentes' inmobiliarias/index.html` THE SYSTEM SHALL salir con código 0.",
+      "WHEN se ejecuta `grep -q 'Coordinar visitas a propiedades consume horas del equipo' inmobiliarias/index.html` THE SYSTEM SHALL salir con código 0."
+    ],
+    "verify": [
+      "test \"$(grep -c 'class=\"pain-item\"' inmobiliarias/index.html)\" = \"4\"",
+      "grep -q 'Los dolores de una agencia con varios agentes' inmobiliarias/index.html",
+      "grep -q 'Sin forma clara de repartir leads entre agentes' inmobiliarias/index.html",
+      "grep -q 'Coordinar visitas a propiedades consume horas del equipo' inmobiliarias/index.html"
+    ],
+    "checkpoint": "step-02-pain-points",
+    "files": ["inmobiliarias/index.html"],
+    "status": "pending"
+  },
+  {
+    "id": "E1-T3",
+    "title": "Sección Como se ve en la práctica",
+    "epic": "01-landing-inmobiliarias",
+    "dependencies": ["E1-T2"],
+    "priority": "p0",
+    "acceptance": [
+      "WHEN se ejecuta `test \"$(grep -c 'class=\"practica-item\"' inmobiliarias/index.html)\" = \"4\"` THE SYSTEM SHALL salir con código 0.",
+      "WHEN se ejecuta `grep -q 'Así se ve en la práctica' inmobiliarias/index.html` THE SYSTEM SHALL salir con código 0.",
+      "WHEN se ejecuta `grep -q 'Reparto automático' inmobiliarias/index.html` THE SYSTEM SHALL salir con código 0.",
+      "WHEN se ejecuta `grep -q 'Panel del dueño' inmobiliarias/index.html` THE SYSTEM SHALL salir con código 0."
+    ],
+    "verify": [
+      "test \"$(grep -c 'class=\"practica-item\"' inmobiliarias/index.html)\" = \"4\"",
+      "grep -q 'Así se ve en la práctica' inmobiliarias/index.html",
+      "grep -q 'Reparto automático' inmobiliarias/index.html",
+      "grep -q 'Panel del dueño' inmobiliarias/index.html"
+    ],
+    "checkpoint": "step-03-practica",
+    "files": ["inmobiliarias/index.html"],
+    "status": "pending"
+  },
+  {
+    "id": "E1-T4",
+    "title": "CTA final, footer y confirmación responsive",
+    "epic": "01-landing-inmobiliarias",
+    "dependencies": ["E1-T3"],
+    "priority": "p0",
+    "acceptance": [
+      "WHEN se ejecuta `test \"$(grep -c \"584121484033\" inmobiliarias/index.html)\" = \"3\"` THE SYSTEM SHALL salir con código 0 (nav + hero + CTA final — ya completo).",
+      "WHEN se ejecuta `grep -q '@media (max-width: 860px)' inmobiliarias/index.html` THE SYSTEM SHALL salir con código 0.",
+      "WHEN se ejecuta `grep -q '@media (max-width: 520px)' inmobiliarias/index.html` THE SYSTEM SHALL salir con código 0.",
+      "WHEN se ejecuta `grep -q 'Automatización con inteligencia artificial · Venezuela' inmobiliarias/index.html` THE SYSTEM SHALL salir con código 0.",
+      "WHEN se ejecuta `grep -q '</html>' inmobiliarias/index.html` THE SYSTEM SHALL salir con código 0 — el archivo quedó correctamente cerrado."
+    ],
+    "verify": [
+      "test \"$(grep -c \"584121484033\" inmobiliarias/index.html)\" = \"3\"",
+      "grep -q '@media (max-width: 860px)' inmobiliarias/index.html",
+      "grep -q '@media (max-width: 520px)' inmobiliarias/index.html",
+      "grep -q 'Automatización con inteligencia artificial · Venezuela' inmobiliarias/index.html",
+      "grep -q '</html>' inmobiliarias/index.html"
+    ],
+    "checkpoint": "step-04-cta-footer-responsive",
+    "files": ["inmobiliarias/index.html"],
+    "status": "pending"
+  },
+  {
+    "id": "E1-T5",
+    "title": "Verificación final: ruta resuelve, landing 1 intacta",
+    "epic": "01-landing-inmobiliarias",
+    "dependencies": ["E1-T4"],
+    "priority": "p0",
+    "acceptance": [
+      "WHEN se sirve el repositorio con `npx --yes http-server . -p 8080` y se pide `http://localhost:8080/inmobiliarias/` THE SYSTEM SHALL responder con código HTTP `200`.",
+      "WHEN se pide `http://localhost:8080/inmobiliarias/index.html` directamente THE SYSTEM SHALL responder también con código HTTP `200`.",
+      "WHEN se ejecuta `git diff --stat -- index.html` THE SYSTEM SHALL no producir ninguna salida — landing 1 permanece sin cambios.",
+      "WHEN se ejecuta `test \"$(grep -c \"584121484033\" inmobiliarias/index.html)\" = \"3\"` THE SYSTEM SHALL salir con código 0 — el conteo final de CTAs de WhatsApp es correcto."
+    ],
+    "verify": [
+      "kill_port_8080() {\n  if command -v fuser >/dev/null 2>&1; then\n    fuser -k 8080/tcp 2>/dev/null || true\n  else\n    for pid in $(netstat -ano 2>/dev/null | grep LISTENING | grep \":8080 \" | awk '{print $NF}'); do\n      taskkill //F //PID \"$pid\" //T 2>/dev/null || true\n    done\n  fi\n}\nkill_port_8080\nnpx --yes http-server . -p 8080 >/dev/null 2>&1 &\nsleep 3\nCODE_DIR=$(curl -s -o /dev/null -w '%{http_code}' http://localhost:8080/inmobiliarias/)\nCODE_FILE=$(curl -s -o /dev/null -w '%{http_code}' http://localhost:8080/inmobiliarias/index.html)\nkill_port_8080\ntest \"$CODE_DIR\" = \"200\" && test \"$CODE_FILE\" = \"200\"",
+      "test -z \"$(git diff --stat -- index.html)\"",
+      "test \"$(grep -c \"584121484033\" inmobiliarias/index.html)\" = \"3\""
+    ],
+    "checkpoint": "step-05-verify-deploy-ready",
+    "files": [],
+    "status": "pending"
+  }
+]
