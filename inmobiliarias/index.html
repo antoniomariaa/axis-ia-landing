@@ -12,8 +12,8 @@
   /* ---------- VIDEO DEL HERO (propio de esta landing) ---------- */
   .video-frame {
     position: relative;
-    aspect-ratio: 3 / 4;
-    max-width: 360px;
+    aspect-ratio: 16 / 9;
+    max-width: 640px;
     width: 100%;
     margin: 0 auto;
     border-radius: 20px;
@@ -29,51 +29,6 @@
     display: block;
     background: var(--surface-1);
   }
-  /* PLACEHOLDER: eliminar .video-placeholder por completo (regla CSS + <div> en el HTML)
-     en cuanto assets/demo.mp4 y assets/poster.jpg existan de verdad. */
-  .video-placeholder {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 14px;
-    background: var(--surface-1);
-    padding: 20px;
-  }
-  .vp-card {
-    width: 100%;
-    background: var(--surface-1);
-    border: 1px solid var(--border-strong);
-    border-radius: 14px;
-    overflow: hidden;
-  }
-  .vp-head {
-    background: var(--surface-2);
-    padding: 12px 14px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    border-bottom: 1px solid var(--border);
-  }
-  .vp-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--teal-light); flex-shrink: 0; }
-  .vp-label {
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    color: var(--ink-soft);
-  }
-  .vp-body { padding: 14px; display: flex; flex-direction: column; gap: 8px; }
-  .vp-bubble { font-size: 12.5px; padding: 8px 12px; border-radius: 12px; max-width: 85%; line-height: 1.4; }
-  .vp-bubble-in { background: var(--surface-2); color: var(--ink); align-self: flex-start; border-bottom-left-radius: 4px; }
-  .vp-bubble-out { background: var(--teal); color: var(--ink); align-self: flex-end; border-bottom-right-radius: 4px; }
-  .vp-typing { display: flex; gap: 4px; padding: 4px 12px; }
-  .vp-typing span { width: 6px; height: 6px; border-radius: 50%; background: var(--ink-soft); opacity: 0.5; }
-  .vp-note { font-size: 11.5px; color: var(--ink-soft); }
-
   /* ---------- CÓMO SE VE EN LA PRÁCTICA (propio de esta landing) ---------- */
   .practica-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px; }
   .practica-item { display: flex; flex-direction: column; gap: 14px; }
@@ -86,7 +41,48 @@
   @media (max-width: 520px) {
     .hero { padding: 40px 0 0; }
     section { padding: 56px 0; }
-    .video-frame { max-width: 300px; }
+    .video-frame { max-width: 100%; }
+  }
+
+  /* ---------- REDISEÑO "ELÉCTRICO" — ya migrado a assets/shared.css (paleta, botones,
+     nav, report-card, reveal por scroll). Acá solo queda lo propio de esta página. ---------- */
+  @property --spin { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
+
+  /* Línea eléctrica animada alrededor del video del hero */
+  .video-frame::after {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    padding: 1px;
+    background: conic-gradient(from var(--spin, 0deg), transparent 0 60%, rgba(var(--glow-rgb), 0.9), transparent 75%);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    opacity: 0.55;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .video-frame::after { animation: spin-border 7s linear infinite; }
+    @keyframes spin-border { to { --spin: 360deg; } }
+  }
+
+  /* Reveal al hacer scroll para lo propio de esta página (el keyframe reveal-in vive en
+     shared.css, ya aplicado a .section-head/.glance-row/.final-cta) */
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .practica-item {
+        opacity: 0;
+        transform: translateY(24px);
+        animation: reveal-in linear both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 30%;
+      }
+      .practica-item:nth-child(1) { animation-delay: 0ms; }
+      .practica-item:nth-child(2) { animation-delay: 90ms; }
+      .practica-item:nth-child(3) { animation-delay: 180ms; }
+      .practica-item:nth-child(4) { animation-delay: 270ms; }
+    }
   }
 </style>
 </head>
@@ -99,10 +95,10 @@
       <div class="brand">
         <div class="mark">
           <svg viewBox="0 0 34 34" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
-            <line x1="9" y1="25" x2="17" y2="9" stroke="#E9E5D8" stroke-width="3" stroke-linecap="round"/>
-            <line x1="25" y1="25" x2="17" y2="9" stroke="#E9E5D8" stroke-width="3" stroke-linecap="round"/>
-            <line x1="12" y1="19.5" x2="22" y2="19.5" stroke="#E9E5D8" stroke-width="2.4" stroke-linecap="round"/>
-            <circle cx="17" cy="9" r="2.4" fill="#E9A23B"/>
+            <line x1="9" y1="25" x2="17" y2="9" stroke="#f2eef7" stroke-width="3" stroke-linecap="round"/>
+            <line x1="25" y1="25" x2="17" y2="9" stroke="#f2eef7" stroke-width="3" stroke-linecap="round"/>
+            <line x1="12" y1="19.5" x2="22" y2="19.5" stroke="#f2eef7" stroke-width="2.4" stroke-linecap="round"/>
+            <circle cx="17" cy="9" r="2.4" fill="#9333ea"/>
           </svg>
         </div>
         <span class="brand-name">Axis IA</span>
@@ -131,26 +127,10 @@
       <div class="stage">
         <div class="tilt">
           <div class="video-frame">
-            <video class="demo-video" muted autoplay loop playsinline controls poster="assets/poster.jpg" aria-label="Demostración del agente de WhatsApp de Axis IA para inmobiliarias">
+            <video class="demo-video" muted autoplay loop playsinline poster="assets/poster.jpg" aria-label="Demostración del agente de WhatsApp de Axis IA para inmobiliarias" disablepictureinpicture disableremoteplayback>
               <source src="assets/demo.mp4" type="video/mp4">
               Tu navegador no puede reproducir este video. Escríbenos por WhatsApp y te mostramos una demostración en vivo.
             </video>
-            <!-- PLACEHOLDER: eliminar este bloque completo en cuanto assets/demo.mp4 y assets/poster.jpg existan -->
-            <div class="video-placeholder">
-              <div class="vp-card">
-                <div class="vp-head">
-                  <span class="vp-dot"></span>
-                  <span class="vp-label">Vista previa · Agente de WhatsApp</span>
-                </div>
-                <div class="vp-body">
-                  <div class="vp-bubble vp-bubble-in">Hola, vi el apartamento en la Av. Libertador, ¿sigue disponible?</div>
-                  <div class="vp-bubble vp-bubble-out">¡Sí! Tiene 3 habitaciones. ¿Buscas para vivir o para invertir?</div>
-                  <div class="vp-bubble vp-bubble-in">Para vivir con mi familia</div>
-                  <div class="vp-typing"><span></span><span></span><span></span></div>
-                </div>
-              </div>
-              <span class="vp-note">Video de demostración próximamente</span>
-            </div>
           </div>
         </div>
       </div>
@@ -211,7 +191,7 @@
       <div class="practica-grid">
         <div class="practica-item">
           <div class="report-card">
-            <div class="rc-head"><div class="dot"></div><div class="rc-title">Calificando un lead</div></div>
+            <div class="rc-head"><div class="dot"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true" focusable="false"><rect x="4.5" y="3.5" width="11" height="14" rx="2" stroke="#f2eef7" stroke-width="1.6"/><path d="M7.5 3.5h5a1 1 0 011 1v.5h-7V4.5a1 1 0 011-1z" fill="#f2eef7"/><path d="M7 10.5l2 2 4-4.5" stroke="#f2eef7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="rc-title">Calificando un lead</div></div>
             <div class="rc-body">
               <div class="rc-point"><span class="rc-check">✓</span><span class="rc-label">Presupuesto capturado</span></div>
               <div class="rc-point"><span class="rc-check">✓</span><span class="rc-label">Zona de interés capturada</span></div>
@@ -222,7 +202,7 @@
 
         <div class="practica-item">
           <div class="report-card">
-            <div class="rc-head"><div class="dot"></div><div class="rc-title">Búsqueda de propiedades</div></div>
+            <div class="rc-head"><div class="dot"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="5" stroke="#f2eef7" stroke-width="1.6"/><path d="M13 13l4 4" stroke="#f2eef7" stroke-width="1.6" stroke-linecap="round"/></svg></div><div class="rc-title">Búsqueda de propiedades</div></div>
             <div class="rc-body">
               <div class="rc-point"><span class="rc-check">✓</span><span class="rc-label">Coincide con el presupuesto</span></div>
               <div class="rc-point"><span class="rc-check">✓</span><span class="rc-label">Coincide con la zona</span></div>
@@ -233,7 +213,7 @@
 
         <div class="practica-item">
           <div class="report-card">
-            <div class="rc-head"><div class="dot"></div><div class="rc-title">Reparto automático</div></div>
+            <div class="rc-head"><div class="dot"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true" focusable="false"><path d="M2.5 6.5h4.8L14 13.5h3" stroke="#f2eef7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M2.5 13.5h4.8L14 6.5h3" stroke="#f2eef7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 4l2.5 2.5L15 9" stroke="#f2eef7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 11l2.5 2.5L15 16" stroke="#f2eef7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="rc-title">Reparto automático</div></div>
             <div class="rc-body">
               <div class="rc-point"><span class="rc-check">✓</span><span class="rc-label">Asignado a agente disponible</span></div>
               <div class="rc-point"><span class="rc-check">✓</span><span class="rc-label">Regla: por zona</span></div>
@@ -244,7 +224,7 @@
 
         <div class="practica-item">
           <div class="report-card">
-            <div class="rc-head"><div class="dot"></div><div class="rc-title">Panel del dueño</div></div>
+            <div class="rc-head"><div class="dot"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true" focusable="false"><path d="M4 16V9" stroke="#f2eef7" stroke-width="1.8" stroke-linecap="round"/><path d="M10 16V4" stroke="#f2eef7" stroke-width="1.8" stroke-linecap="round"/><path d="M16 16v-7" stroke="#f2eef7" stroke-width="1.8" stroke-linecap="round"/></svg></div><div class="rc-title">Panel del dueño</div></div>
             <div class="rc-body">
               <div class="rc-point"><span class="rc-check">✓</span><span class="rc-label">Leads de la semana</span></div>
               <div class="rc-point"><span class="rc-check">✓</span><span class="rc-label">Visitas agendadas</span></div>
@@ -275,10 +255,10 @@
       <div class="f-brand">
         <div class="fmark">
           <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
-            <line x1="5" y1="15" x2="10" y2="5" stroke="#E9E5D8" stroke-width="1.8" stroke-linecap="round"/>
-            <line x1="15" y1="15" x2="10" y2="5" stroke="#E9E5D8" stroke-width="1.8" stroke-linecap="round"/>
-            <line x1="7" y1="11.5" x2="13" y2="11.5" stroke="#E9E5D8" stroke-width="1.4" stroke-linecap="round"/>
-            <circle cx="10" cy="5" r="1.4" fill="#E9A23B"/>
+            <line x1="5" y1="15" x2="10" y2="5" stroke="#f2eef7" stroke-width="1.8" stroke-linecap="round"/>
+            <line x1="15" y1="15" x2="10" y2="5" stroke="#f2eef7" stroke-width="1.8" stroke-linecap="round"/>
+            <line x1="7" y1="11.5" x2="13" y2="11.5" stroke="#f2eef7" stroke-width="1.4" stroke-linecap="round"/>
+            <circle cx="10" cy="5" r="1.4" fill="#9333ea"/>
           </svg>
         </div>
         <span>Axis IA</span>
